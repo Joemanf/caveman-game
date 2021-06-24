@@ -11,7 +11,9 @@ public class PlayerMovement : MonoBehaviour
     // WE WILL NEED THIS LATER, DO NOT DELETE IT!
     // [SerializeField] public Animator animator;
 
-    // The variable that will store the move speed and direction
+    // These variables will store the move speed and direction
+    float mx;
+    float my;
     Vector2 moving;
 
     void Update()
@@ -24,8 +26,6 @@ public class PlayerMovement : MonoBehaviour
         // which is normalized (changes things to 1, -1, or 0)
         // which is then multiplied by the movespeed (set in the editor)
         moving = new Vector2(mx, my).normalized * moveSpeed;
-        // the rigidbody's velocity is set to moving (which should return something like [-1, 0])
-        rb.velocity = moving;
 
         // Animation stuff
         // WE WILL NEED THIS LATER, DO NOT DELETE IT!
@@ -34,8 +34,10 @@ public class PlayerMovement : MonoBehaviour
         // animator.SetFloat("Speed", moving.sqrMagnitude);
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-
+        // the rigidbody's velocity is set to moving (which should return something like [-1, 0])
+        // multiplying it by Time.fixedDeltaTime with ensure that it runs the same on all systems
+        rb.velocity = moving * Time.fixedDeltaTime;
     }
 }
